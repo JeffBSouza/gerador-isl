@@ -2,70 +2,161 @@
 <html lang="pt-br">
 <head>
 <meta charset="UTF-8">
-<title>Gerador ISL</title>
+<title>Gerador ISL - Instalação Silenciosa</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
 body {
-    font-family: Arial;
-    background: #f4f6f9;
+    margin: 0;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: linear-gradient(135deg, #0f172a, #1e293b);
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
+    color: #fff;
 }
 
-.container {
-    background: white;
-    padding: 25px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    width: 600px;
+.card {
+    background: #111827;
+    padding: 35px;
+    border-radius: 15px;
+    width: 650px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.6);
 }
 
-input, textarea {
-    width: 100%;
-    padding: 10px;
-    margin-top: 10px;
+h2 {
+    text-align: center;
+    margin-bottom: 25px;
+    font-weight: 500;
+}
+
+label {
     font-size: 14px;
+    opacity: 0.8;
+}
+
+input {
+    width: 100%;
+    padding: 12px;
+    margin-top: 8px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    border: none;
+    font-size: 15px;
+    outline: none;
+}
+
+textarea {
+    width: 100%;
+    height: 120px;
+    padding: 12px;
+    border-radius: 8px;
+    border: none;
+    font-size: 13px;
+    resize: none;
+    margin-top: 15px;
+}
+
+.buttons {
+    display: flex;
+    gap: 10px;
 }
 
 button {
-    margin-top: 15px;
-    padding: 10px;
-    width: 100%;
+    flex: 1;
+    padding: 12px;
+    border-radius: 8px;
+    border: none;
+    font-size: 15px;
     cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.generate {
+    background: #2563eb;
+    color: white;
+}
+
+.generate:hover {
+    background: #1d4ed8;
+}
+
+.copy {
+    background: #10b981;
+    color: white;
+}
+
+.copy:hover {
+    background: #059669;
+}
+
+.footer-msg {
+    text-align: center;
+    margin-top: 15px;
+    font-size: 13px;
+    opacity: 0.8;
+    height: 18px;
 }
 </style>
 </head>
 
 <body>
 
-<div class="container">
-    <h3>Gerador de Link ISL - Instalação Silenciosa</h3>
+<div class="card">
+    <h2>Gerador ISL - Instalação Silenciosa</h2>
 
-    <label>Digite o texto que será inserido no link:</label>
-    <input type="text" id="nome">
+    <label>Texto que será inserido na descrição:</label>
+    <input type="text" id="descricao" placeholder="Ex: LOJA 01 - CAIXA 02" onkeydown="if(event.key==='Enter'){gerarLink()}">
 
-    <button onclick="gerarLink()">GERAR LINK</button>
+    <div class="buttons">
+        <button class="generate" onclick="gerarLink()">Gerar Link</button>
+        <button class="copy" onclick="copiarLink()">Copiar</button>
+    </div>
 
-    <textarea id="resultado" rows="5" readonly></textarea>
+    <textarea id="resultado" readonly placeholder="O link gerado aparecerá aqui..."></textarea>
+
+    <div class="footer-msg" id="mensagem"></div>
 </div>
 
 <script>
 function gerarLink() {
 
-    let textoDigitado = document.getElementById("nome").value.trim();
+    let texto = document.getElementById("descricao").value.trim();
 
-    if(textoDigitado === ""){
-        alert("Digite um valor primeiro.");
+    if(texto === ""){
+        mostrarMensagem("Digite um texto antes de gerar.");
         return;
     }
 
     let url_base = "https://account.islonline.net/start/ISLAlwaysOn?cmdline=%22password_md5%22+%22c5d7c5561d84f6a20e59bcdccb9093be%22+%22%2fVERYSILENT%22+%22grant_silent%22+%22zeJxtUj1PxDAMVUBsTEyMHQFB1KRN2o6MSAgkkJhucRKnhMslkDR3fCz8dAoj18XD8%2fN7frJHbQ%2fJzeNtdR%2b8C1jd4bSLaX1CRmcOSdvWWmsmukE0rNfIgYNmPVPCYjtgJ1DUQjFpVVdziUbY2jQSawNgByV6NIBKQ4%2bc8VrqDsC0pm8GJmXPRSeElkywBlXNh4YZO8gBZl5rms42vG%2b%2bSSYE%2fA4%2bcgxXF9RlH%2f%2f2pAGnU1IIYdVV9fQwlwfUuLkJeQIPJuYZuR4LJAPBxApeSp6wOlutcrTTDhI%2bx5JxdXFZ%2fYcseveKNMEm5v3uCCo59B6pggTeuAXKbAXbSC0kBwsSzxiSeytIJ3Tv6BLsU17QWkxzZKrKJ0xxn7GexQPQVyh%2bYX4NHwUCjd5tlw02kDT6Bd3fRsk0pgBjWQiXMMzC2fktnH%2bRg%2fL3JB3vmajlfMH2mByRH5IBzI4%3d%22+%22ignore_system_account%22+%22grant_password_md5%22+%22c5d7c5561d84f6a20e59bcdccb9093be%22+%22description%22+%22";
 
-    let url_final = url_base + encodeURIComponent(textoDigitado) + "%22&__ISL+Network+Start__hide_gui=1";
+    let url_final = url_base + encodeURIComponent(texto) + "%22&__ISL+Network+Start__hide_gui=1";
 
     document.getElementById("resultado").value = url_final;
+
+    mostrarMensagem("Link gerado com sucesso.");
+}
+
+function copiarLink() {
+    let textarea = document.getElementById("resultado");
+
+    if(textarea.value === ""){
+        mostrarMensagem("Gere o link antes de copiar.");
+        return;
+    }
+
+    textarea.select();
+    textarea.setSelectionRange(0, 99999);
+    navigator.clipboard.writeText(textarea.value);
+
+    mostrarMensagem("Link copiado com sucesso!");
+}
+
+function mostrarMensagem(msg) {
+    let el = document.getElementById("mensagem");
+    el.innerText = msg;
+    setTimeout(() => { el.innerText = ""; }, 3000);
 }
 </script>
 
