@@ -107,11 +107,11 @@ button {
     <h2>Gerador ISL - Instalação Silenciosa</h2>
 
     <label>Texto que será inserido na descrição:</label>
-    <input type="text" id="descricao" placeholder="Ex: LOJA 01 - CAIXA 02" onkeydown="if(event.key==='Enter'){gerarLink()}">
+    <input type="text" id="descricao" placeholder="Ex: SUPERMERCADO TESTE - Loja 01 - 08.076.873/0001-90" onkeydown="if(event.key==='Enter'){gerarLink()}">
 
     <div class="buttons">
-        <button class="generate" onclick="gerarLink()">Gerar Link</button>
-        <button class="copy" onclick="copiarLink()">Copiar</button>
+        <button class="generate" onclick="gerarLink()">Gerar Link ISL</button>
+        <button class="copy" onclick="copiarLink()">Copiar Link Gerado</button>
     </div>
 
     <textarea id="resultado" readonly placeholder="O link gerado aparecerá aqui..."></textarea>
@@ -162,3 +162,4 @@ function mostrarMensagem(msg) {
 
 </body>
 </html>
+
